@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Profecia Cultural
 
-## Getting Started
+> Website oficial e portfólio interativo da produtora **Profecia Cultural**.
 
-First, run the development server:
+## 🎯 Sobre a Profecia
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A Produtora **Profecia Cultural**, surgiu em 2025 em Sergipe com o propósito de produzir projetos culturais voltados a diversidade artística, intercâmbio de personalidades e contribuir com inovações culturais que estimulem o cenário sergipano. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Com um olhar especial para a Cultura Negra e para o entranhamento do interior sergipano, os nossos eventos promovem uma circulação que atravessa do interior sergipano, a exemplo de Tobias Barreto, a capital Aracaju e estados outros como Bahia e São Paulo.  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para 2026 a nossa missão é estimular ainda mais a troca de saberes e experiências plurais, realizando projetos e atividades por mais localidades em Sergipe e pluralizando a diversidade de gêneros artísticos, modalidades culturais e formatos diversos de eventos.
+<div align="center">
+  <a href="https://www.youtube.com/@Profecia.Cultural" target="_blank">
+    <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube Profecia Cultural"/>
+  </a>
+  <a href="https://www.instagram.com/profecia.cultural/" target="_blank">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Profecia Cultural"/>
+  </a>
+  <a href="https://www.profeciacultural.com.br/" target="_blank">
+    <img src="https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=About.me&logoColor=white" alt="Website Profecia Cultural"/>
+  </a>
+</div>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Tecnologias
 
-## Learn More
+Projeto construído com arquitetura *Headless*.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-   **Front-end:** [Next.js 15](https://nextjs.org/)
+-   **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
+-   **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+-   **CMS:** [Sanity.io](https://www.sanity.io/)
