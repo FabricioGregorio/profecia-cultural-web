@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- TEMA CLARO (LIGHT MODE) --- */
+    /* Fundo branco levemente off-white */
+    --background: 248 248 255; 
+    /* Texto quase preto */
+    --foreground: 10 10 10; 
+
+    /* Cor Principal */
+    --primary: 255 186 3; 
+    --primary-foreground: 10 10 10;
+
+    /* Cor Secundária */
+    --card: 248 248 255;
+    --card-foreground: 10 10 10;
+    
+    /* Bordas sutis */
+    --border: 229 231 235;
+  }
+
+  .dark {
+    /* --- TEMA ESCURO (DARK MODE - Padrão da Profecia) --- */
+    /* Preto Profundo */
+    --background: 10 10 10; 
+    --foreground: 248 248 255;
+
+    /* Cor Principal */
+    --primary: 255 186 3; 
+    --primary-foreground: 10 10 10;
+
+    /* Cards no escuro são cinza escuro */
+    --card: 23 23 23;
+    --card-foreground: 248 248 255;
+
+    --border: 38 38 38;
+  }
+}
+
+/* Aplica o reset suave em tudo */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}

@@ -1,0 +1,76 @@
+/* Container principal do Header */
+.header {
+  @apply sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-300;
+  @apply bg-background/80 border-border text-foreground;
+}
+
+/* O justify-between garante que Logo fique na ponta esquerda e Menu na ponta direita */
+.Innercontainer {
+  @apply container mx-auto px-4 h-20 flex items-center justify-between;
+}
+
+/* --- ÁREA DOS LOGOS --- */
+.logoArea {
+  @apply flex items-center gap-3 hover:opacity-80 transition-opacity;
+}
+
+/* --- NAVEGAÇÃO DESKTOP --- */
+.navDesktop {
+  @apply hidden md:flex items-center gap-6 font-serif tracking-wide;
+}
+
+/* O Link base */
+.navLink {
+  @apply relative text-sm uppercase font-bold transition-colors py-1;
+  @apply text-foreground/80 hover:text-primary;
+}
+
+/* A Linha Mágica (Pseudo-elemento) */
+.navLink::after {
+  content: '';
+  /* Posicionamento: Absoluto em relação ao texto, colado embaixo */
+  @apply absolute left-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-300 ease-in-out;
+}
+
+/* Quando passar o mouse, a linha cresce */
+.navLink:hover::after {
+  @apply w-full;
+}
+
+/* ESTADO ATIVO (Página atual) */
+.navLinkActive {
+  @apply text-primary; /* O texto fica amarelo */
+}
+
+/* No estado ativo, a linha fica sempre cheia (100%) */
+.navLinkActive::after {
+  @apply w-full;
+}
+
+/* Divisória vertical para separar Links das Ferramentas (Tema/Idioma) */
+.separator {
+  @apply h-6 w-px bg-border mx-2;
+}
+
+/* --- SELETOR DE IDIOMA --- */
+.langSelector {
+  @apply flex items-center gap-2 text-xs font-bold;
+}
+
+.langOption {
+  @apply cursor-pointer transition-colors hover:text-primary;
+  @apply text-foreground/60; /* Cor padrão apagadinha */
+}
+
+.langActive {
+  @apply text-primary; /* Cor do idioma selecionado */
+}
+
+/* Botões do Mobile */
+.mobileOnly {
+  @apply md:hidden flex items-center gap-4;
+}
+
+.iconButton {
+  @apply p-2 rounded-full transition-colors hover:bg-foreground/10;
+}
