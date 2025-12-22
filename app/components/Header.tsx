@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, Sun, Moon } from "lucide-react";
+import { Menu, Sun, Moon, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import styles from "../styles/Header.module.css";
 
@@ -12,12 +12,17 @@ export default function Header() {
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [lang, setLang] = useState("PT");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+  }, [setMounted]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   if (!mounted) {
     return <div className="h-20 bg-background/80" />;
@@ -25,6 +30,10 @@ export default function Header() {
 
   const getLinkClass = (path: string) => {
     return `${styles.navLink} ${pathname === path ? styles.navLinkActive : ""}`;
+  };
+
+  const getMobileLinkClass = (path: string) => {
+    return `${styles.mobileNavLink} ${pathname === path ? styles.mobileNavLinkActive : ""}`;
   };
 
   return (
@@ -42,7 +51,7 @@ export default function Header() {
               priority
             />
           </div>
-          <div className="relative hidden sm:block w-40 h-20 lg:w-48 lg:h-12 transition-all duration-300"> 
+          <div className="relative hidden min-[450px]:block w-40 h-20 lg:w-48 lg:h-12 transition-all duration-300"> 
             <Image 
               src="/assets/logoNome.png" 
               alt="Profecia Cultural" 
@@ -100,12 +109,72 @@ export default function Header() {
 
         {/* --- MENU MOBILE --- */}
         <div className={styles.mobileOnly}>
-          <button className={styles.iconButton} aria-label="Abrir Menu">
-            <Menu size={28} />
+          <button 
+            className={styles.iconButton} 
+            aria-label="Alternar Menu"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
       </div>
+
+      {/* --- MENU MOBILE DROPDOWN --- */}
+      {isMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <Link 
+            href="/" 
+            className={getMobileLinkClass("/")} 
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Início
+          </Link>
+          <Link 
+            href="/projetos" 
+            className={getMobileLinkClass("/projetos")} 
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Projetos
+          </Link>
+          <Link 
+            href="/sobre" 
+            className={getMobileLinkClass("/sobre")} 
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Sobre Nós
+          </Link>
+          <Link 
+            href="/contato" 
+            className={getMobileLinkClass("/contato")} 
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Contato
+          </Link>
+
+          <div className={styles.mobileTools}>
+             {/* Theme Toggle */}
+             <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-foreground/60">Tema:</span>
+                <button
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 transition-colors"
+                >
+                  {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
+                </button>
+             </div>
+
+             {/* Seletor de Idioma */}
+             <div className={styles.langSelector}>
+                <button onClick={() => setLang("PT")} className={`${styles.langOption} ${lang === "PT" ? styles.langActive : ""}`}>PT</button>
+                <span>|</span>
+                <button onClick={() => setLang("EN")} className={`${styles.langOption} ${lang === "EN" ? styles.langActive : ""}`}>EN</button>
+                <span>|</span>
+                <button onClick={() => setLang("ES")} className={`${styles.langOption} ${lang === "ES" ? styles.langActive : ""}`}>ES</button>
+             </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

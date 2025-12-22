@@ -16,7 +16,7 @@
 
 /* --- NAVEGAÇÃO DESKTOP --- */
 .navDesktop {
-  @apply hidden md:flex items-center gap-6 font-serif tracking-wide;
+  @apply hidden min-[1025px]:flex items-center gap-6 font-serif tracking-wide;
 }
 
 /* O Link base */
@@ -68,9 +68,27 @@
 
 /* Botões do Mobile */
 .mobileOnly {
-  @apply md:hidden flex items-center gap-4;
+  @apply min-[1025px]:hidden flex items-center gap-4;
 }
 
 .iconButton {
   @apply p-2 rounded-full transition-colors hover:bg-foreground/10;
+}
+
+/* --- MENU MOBILE (DROPDOWN) --- */
+.mobileMenu {
+  @apply absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border shadow-xl;
+  @apply flex flex-col p-6 gap-6 min-[1025px]:hidden overflow-hidden;
+}
+
+.mobileNavLink {
+  @apply text-lg font-bold uppercase tracking-wide text-foreground/80 hover:text-primary transition-colors py-2 border-b border-border/50;
+}
+
+.mobileNavLinkActive {
+  @apply text-primary border-primary;
+}
+
+.mobileTools {
+  @apply flex items-center justify-between mt-2;
 }
