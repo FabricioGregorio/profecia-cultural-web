@@ -11,7 +11,55 @@
   },
   "home": {
     "upcomingEvents": "Upcoming Events",
-    "contentComingSoon": "Content coming from Sanity CMS soon..."
+    "contentComingSoon": "Content coming from Sanity CMS soon...",
+
+    "manifestoTitle": "Visual Manifesto",
+    "manifestoQuote": "From the countryside of Sergipe to the world. We produce culture with identity, diversity, and logistical excellence.",
+    "manifestoRoute": "Tobias Barreto • Aracaju • SP",
+
+    "showcaseTitle": "Showcase",
+    "showcaseSubtitle": "A strategic window into projects and productions — enough to spark interest, not to give it all away.",
+    "showcaseButton": "Behind the Scenes",
+    "showcaseFallbackTitle": "Profecia Cultural Case",
+    "showcaseFallbackTeaser": "Culture with identity, diversity, and logistical excellence.",
+    "showcaseWhatsAppMessage": "Hi! I'd like to learn more about this case: {title}. Can we talk?",
+    "showcaseWhatsAppMessageGeneric": "Hi! I'd like to learn more about Profecia Cultural's cases. Can we talk?",
+    "showcasePlaceholderTitle1": "Tradition Revival",
+    "showcasePlaceholderTeaser1": "Reviving tradition with large-scale structure.",
+    "showcasePlaceholderTitle2": "Academic Dialogues",
+    "showcasePlaceholderTeaser2": "Bringing popular culture into the Federal University.",
+    "showcasePlaceholderTitle3": "Touring & Logistics",
+    "showcasePlaceholderTeaser3": "From the countryside to major stages: production with organization and excellence.",
+
+    "categories": {
+      "teatro": "Theater",
+      "danca": "Dance",
+      "audiovisual": "Audiovisual",
+      "evento": "Cultural Event",
+      "educacao": "Education",
+      "outros": "Other"
+    },
+
+    "atuacaoTitle": "Our Work",
+    "atuacaoSubtitle": "Three pillars to deliver culture with quality, responsibility, and structure.",
+    "atuacaoPillar1Title": "Artistic Production",
+    "atuacaoPillar1Desc": "Shows, sambas, and cultural gatherings with curation, quality, and audience experience.",
+    "atuacaoPillar2Title": "Education & Training",
+    "atuacaoPillar2Desc": "Workshops, schools, and university: popular culture as knowledge and transformation.",
+    "atuacaoPillar3Title": "Cultural Management",
+    "atuacaoPillar3Desc": "Team, setup, and organization: technical capacity for events that demand logistics.",
+
+    "impactoTitle": "Impact",
+    "impactoSubtitle": "Social proof of what we've delivered — and what we'll build next.",
+    "impactoPlaceholder1": "More than X artists circulated between Tobias Barreto and Aracaju.",
+    "impactoPlaceholder2": "Estimated total audience of Y people in 2024.",
+    "impactoPlaceholder3": "Structure and partnerships for large-scale productions.",
+
+    "ctaTitle": "Call to Action",
+    "ctaText": "Does your brand or city need this energy? Let's build the 2026 calendar together.",
+    "ctaContactHint": "Executive producer WhatsApp: Galileu Santana — +55 (79) 99841-4881",
+    "ctaButton": "Message on WhatsApp",
+    "ctaWhatsAppMessage": "Hi, Galileu! I'd like to build the 2026 calendar with Profecia Cultural."
   },
   "footer": {
     "description": "Promoting culture and ancestry.",

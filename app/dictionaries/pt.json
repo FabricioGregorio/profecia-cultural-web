@@ -11,7 +11,55 @@
   },
   "home": {
     "upcomingEvents": "Próximos Eventos",
-    "contentComingSoon": "O conteúdo virá do Sanity CMS em breve..."
+    "contentComingSoon": "O conteúdo virá do Sanity CMS em breve...",
+
+    "manifestoTitle": "Manifesto Visual",
+    "manifestoQuote": "Do interior de Sergipe para o mundo. Produzimos cultura com identidade, diversidade e excelência logística.",
+    "manifestoRoute": "Tobias Barreto • Aracaju • SP",
+
+    "showcaseTitle": "Showcase",
+    "showcaseSubtitle": "Uma vitrine estratégica de projetos e realizações — sem entregar tudo, mas gerando desejo.",
+    "showcaseButton": "Ver Bastidores",
+    "showcaseFallbackTitle": "Case Profecia Cultural",
+    "showcaseFallbackTeaser": "Cultura com identidade, diversidade e excelência logística.",
+    "showcaseWhatsAppMessage": "Olá! Quero conhecer o case: {title}. Podemos conversar?",
+    "showcaseWhatsAppMessageGeneric": "Olá! Quero conhecer os cases da Profecia Cultural. Podemos conversar?",
+    "showcasePlaceholderTitle1": "Resgate da Tradição",
+    "showcasePlaceholderTeaser1": "Resgate da tradição com estrutura de grande porte.",
+    "showcasePlaceholderTitle2": "Diálogos Acadêmicos",
+    "showcasePlaceholderTeaser2": "Levando a cultura popular para dentro da Universidade Federal.",
+    "showcasePlaceholderTitle3": "Circulação e Logística",
+    "showcasePlaceholderTeaser3": "Do interior para grandes palcos: produção com organização e excelência.",
+
+    "categories": {
+      "teatro": "Teatro",
+      "danca": "Dança",
+      "audiovisual": "Audiovisual",
+      "evento": "Evento Cultural",
+      "educacao": "Educação",
+      "outros": "Outros"
+    },
+
+    "atuacaoTitle": "Nossa Atuação",
+    "atuacaoSubtitle": "Três pilares para entregar cultura com qualidade, responsabilidade e estrutura.",
+    "atuacaoPillar1Title": "Produção Artística",
+    "atuacaoPillar1Desc": "Shows, sambas e saraus com curadoria, qualidade e experiência de público.",
+    "atuacaoPillar2Title": "Educação e Formação",
+    "atuacaoPillar2Desc": "Oficinas, escolas e universidade: cultura popular como conhecimento e transformação.",
+    "atuacaoPillar3Title": "Gestão Cultural",
+    "atuacaoPillar3Desc": "Equipe, montagem e organização: capacidade técnica para eventos que exigem logística.",
+
+    "impactoTitle": "Impacto",
+    "impactoSubtitle": "Prova social do que já entregamos — e do que ainda vamos construir.",
+    "impactoPlaceholder1": "Mais de X artistas circulados entre Tobias Barreto e Aracaju.",
+    "impactoPlaceholder2": "Público total estimado de Y pessoas em 2024.",
+    "impactoPlaceholder3": "Estrutura e parcerias para produções de grande porte.",
+
+    "ctaTitle": "Convite à Ação",
+    "ctaText": "Sua marca ou cidade precisa dessa energia? Vamos construir o calendário de 2026 juntos.",
+    "ctaContactHint": "WhatsApp do produtor executivo: Galileu Santana — (79) 9 9841-4881",
+    "ctaButton": "Falar no WhatsApp",
+    "ctaWhatsAppMessage": "Olá, Galileu! Quero construir o calendário de 2026 com a Profecia Cultural."
   },
   "footer": {
     "description": "Promovendo a cultura e a ancestralidade.",

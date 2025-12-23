@@ -30,7 +30,7 @@ export default async function Footer({ locale }: { locale: string }) {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Coluna 1: Identidade */}
-          <div className="flex flex-col items-start space-y-4">
+          <div className="flex flex-col items-center text-center space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10">
                  <Image 
@@ -50,9 +50,9 @@ export default async function Footer({ locale }: { locale: string }) {
           </div>
 
           {/* Coluna 2: Parceiros */}
-          <div className="flex flex-col space-y-4">
-            <h3 className="font-bold text-lg">{t('partners')}</h3>
-            <div className="flex flex-col space-y-3">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <h3 className="font-bold text-lg text-primary">{t('partners')}</h3>
+            <div className="flex flex-col items-start space-y-3">
               {parceiros.length > 0 ? (
                 parceiros.map((parceiro) => (
                   <Link 
@@ -85,9 +85,9 @@ export default async function Footer({ locale }: { locale: string }) {
           </div>
 
           {/* Coluna 3: Contatos e Redes */}
-          <div className="flex flex-col space-y-4">
-            <h3 className="font-bold text-lg">{t('connect')}</h3>
-            <div className="flex space-x-4">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <h3 className="font-bold text-lg text-primary">{t('connect')}</h3>
+            <div className="flex justify-center space-x-4">
               <a 
                 href="https://www.instagram.com/profecia.cultural/" 
                 target="_blank" 
