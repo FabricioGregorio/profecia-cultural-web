@@ -14,7 +14,7 @@ const HERO_PHOTOS = [
   },
   { 
     id: 2, 
-    src: "/assets/hero/oficinaVinil.jpg", 
+    src: "/assets/hero/oficina-Vinil.jpg", 
     alt: "Oficina: Dialogando ao som do Vinil", 
     className: "col-span-2 row-span-1" 
   },

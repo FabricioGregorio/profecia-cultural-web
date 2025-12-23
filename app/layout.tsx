@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Geist_Mono, Cinzel } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "./components/ThemeProvider";
-import Header from "./components/Header";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -40,16 +38,7 @@ export default function RootLayout({
       <body
         className={`${notoSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased font-sans`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          
-          {children}
-        </ThemeProvider>
+        {children}
       </body>
     </html>
   );
