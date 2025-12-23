@@ -1,17 +1,31 @@
-/* Container principal do Header */
+/* --- CONTAINER PRINCIPAL --- */
 .header {
-  @apply sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-300;
-  @apply bg-background/80 border-border text-foreground;
+  @apply fixed top-0 left-0 w-full z-50 h-20;
+  @apply transition-all duration-300 ease-in-out;
 }
 
-/* O justify-between garante que Logo fique na ponta esquerda e Menu na ponta direita */
+.headerTransparent {
+  @apply bg-transparent border-b border-transparent backdrop-blur-none;
+  
+  background: linear-gradient(to bottom, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%);
+}
+:global(.dark) .headerTransparent {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* ESTADO: Scrolled */
+.headerScrolled {
+  @apply bg-background/90 border-b border-border backdrop-blur-md shadow-md;
+}
+
+/* --- LAYOUT INTERNO --- */
 .Innercontainer {
-  @apply container mx-auto px-4 h-20 flex items-center justify-between;
+  @apply container mx-auto px-4 h-full flex items-center justify-between;
 }
 
 /* --- ÁREA DOS LOGOS --- */
 .logoArea {
-  @apply flex items-center gap-3 hover:opacity-80 transition-opacity;
+  @apply flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer;
 }
 
 /* --- NAVEGAÇÃO DESKTOP --- */
@@ -25,64 +39,63 @@
   @apply text-foreground/80 hover:text-primary;
 }
 
-/* A Linha Mágica (Pseudo-elemento) */
+/* Estilização com linha */
 .navLink::after {
   content: '';
-  /* Posicionamento: Absoluto em relação ao texto, colado embaixo */
   @apply absolute left-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-300 ease-in-out;
 }
 
-/* Quando passar o mouse, a linha cresce */
 .navLink:hover::after {
   @apply w-full;
 }
 
-/* ESTADO ATIVO (Página atual) */
+/* ESTADO ATIVO */
 .navLinkActive {
-  @apply text-primary; /* O texto fica amarelo */
+  @apply text-primary;
 }
 
-/* No estado ativo, a linha fica sempre cheia (100%) */
 .navLinkActive::after {
   @apply w-full;
 }
 
-/* Divisória vertical para separar Links das Ferramentas (Tema/Idioma) */
 .separator {
-  @apply h-6 w-px bg-border mx-2;
+  @apply h-6 w-px bg-border/60 mx-2;
 }
 
 /* --- SELETOR DE IDIOMA --- */
 .langSelector {
-  @apply flex items-center gap-2 text-xs font-bold;
+  @apply flex items-center gap-2 text-xs font-bold ml-2;
 }
 
 .langOption {
-  @apply cursor-pointer transition-colors hover:text-primary;
-  @apply text-foreground/60; /* Cor padrão apagadinha */
+  @apply cursor-pointer transition-colors hover:text-primary p-1;
+  @apply text-foreground/70; 
 }
 
 .langActive {
-  @apply text-primary; /* Cor do idioma selecionado */
+  @apply text-primary;
 }
 
-/* Botões do Mobile */
+/* --- BOTÕES MOBILE --- */
 .mobileOnly {
   @apply min-[1025px]:hidden flex items-center gap-4;
 }
 
 .iconButton {
-  @apply p-2 rounded-full transition-colors hover:bg-foreground/10;
+  @apply p-2 rounded-full transition-colors hover:bg-foreground/10 text-foreground;
 }
 
-/* --- MENU MOBILE (DROPDOWN) --- */
+/* --- MENU MOBILE (DROPDOWN / GAVETA) --- */
 .mobileMenu {
-  @apply absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border shadow-xl;
-  @apply flex flex-col p-6 gap-6 min-[1025px]:hidden overflow-hidden;
+  @apply fixed top-20 left-0 w-full h-[calc(100vh-80px)] z-40;
+  @apply bg-background/95 backdrop-blur-xl border-t border-border shadow-xl;
+  @apply flex flex-col p-6 gap-6 min-[1025px]:hidden overflow-y-auto;
+  
+  animation: slideIn 0.3s ease-out forwards;
 }
 
 .mobileNavLink {
-  @apply text-lg font-bold uppercase tracking-wide text-foreground/80 hover:text-primary transition-colors py-2 border-b border-border/50;
+  @apply text-lg font-bold uppercase tracking-wide text-foreground/80 hover:text-primary transition-colors py-4 border-b border-border/50;
 }
 
 .mobileNavLinkActive {
@@ -90,5 +103,11 @@
 }
 
 .mobileTools {
-  @apply flex items-center justify-between mt-2;
+  @apply flex items-center justify-between mt-auto pb-4;
+}
+
+/* Keyframes da Animação */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

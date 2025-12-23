@@ -13,19 +13,28 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const [lang, setLang] = useState("PT");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   
   const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
-  }, [setMounted]);
+    
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
 
   if (!mounted) {
-    return <div className="h-20 bg-background/80" />;
+    return <div className="h-20 w-full fixed top-0 z-50 bg-transparent" />;
   }
 
   const getLinkClass = (path: string) => {
@@ -37,10 +46,9 @@ export default function Header() {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : styles.headerTransparent}`}>
       <div className={styles.Innercontainer}>
         
-        {/* --- LADO ESQUERDO: LOGOS --- */}
         <Link href="/" className={styles.logoArea}>
           <div className="relative w-14 h-14 md:w-14 md:h-14 lg:w-16 lg:h-16 transition-all duration-300"> 
             <Image 
@@ -61,7 +69,6 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* --- LADO DIREITO: MENU + FERRAMENTAS --- */}
         <nav className={styles.navDesktop}>
           
           <Link href="/" className={getLinkClass("/")}>Início</Link>
@@ -69,10 +76,8 @@ export default function Header() {
           <Link href="/sobre" className={getLinkClass("/sobre")}>Sobre Nós</Link>
           <Link href="/contato" className={getLinkClass("/contato")}>Contato</Link>
 
-          {/* Divisória Visual */}
           <div className={styles.separator} />
 
-          {/* Botão de Tema */}
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="relative p-1 rounded-full hover:text-primary transition-colors w-8 h-8 flex items-center justify-center"
@@ -82,7 +87,6 @@ export default function Header() {
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </button>
 
-          {/* Seletor de Idioma */}
           <div className={styles.langSelector}>
             <button 
               onClick={() => setLang("PT")} 
@@ -107,7 +111,6 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* --- MENU MOBILE --- */}
         <div className={styles.mobileOnly}>
           <button 
             className={styles.iconButton} 
@@ -120,58 +123,36 @@ export default function Header() {
 
       </div>
 
-      {/* --- MENU MOBILE DROPDOWN --- */}
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
-          <Link 
-            href="/" 
-            className={getMobileLinkClass("/")} 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Início
-          </Link>
-          <Link 
-            href="/projetos" 
-            className={getMobileLinkClass("/projetos")} 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Projetos
-          </Link>
-          <Link 
-            href="/sobre" 
-            className={getMobileLinkClass("/sobre")} 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Sobre Nós
-          </Link>
-          <Link 
-            href="/contato" 
-            className={getMobileLinkClass("/contato")} 
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contato
-          </Link>
+          <div className="flex flex-col gap-6 p-6">
+            <Link href="/" className={getMobileLinkClass("/")} onClick={() => setIsMenuOpen(false)}>Início</Link>
+            <Link href="/projetos" className={getMobileLinkClass("/projetos")} onClick={() => setIsMenuOpen(false)}>Projetos</Link>
+            <Link href="/sobre" className={getMobileLinkClass("/sobre")} onClick={() => setIsMenuOpen(false)}>Sobre Nós</Link>
+            <Link href="/contato" className={getMobileLinkClass("/contato")} onClick={() => setIsMenuOpen(false)}>Contato</Link>
 
-          <div className={styles.mobileTools}>
-             {/* Theme Toggle */}
-             <div className="flex items-center gap-3">
-                <span className="text-sm font-bold text-foreground/60">Tema:</span>
-                <button
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 transition-colors"
-                >
-                  {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
-                </button>
-             </div>
+            <div className={styles.mobileTools}>
+               <div className="flex items-center gap-3 justify-between border-t border-border pt-4">
+                  <span className="text-base font-medium">Alternar Tema</span>
+                  <button
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="p-2 rounded-full bg-accent text-accent-foreground"
+                  >
+                    {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
+                  </button>
+               </div>
 
-             {/* Seletor de Idioma */}
-             <div className={styles.langSelector}>
-                <button onClick={() => setLang("PT")} className={`${styles.langOption} ${lang === "PT" ? styles.langActive : ""}`}>PT</button>
-                <span>|</span>
-                <button onClick={() => setLang("EN")} className={`${styles.langOption} ${lang === "EN" ? styles.langActive : ""}`}>EN</button>
-                <span>|</span>
-                <button onClick={() => setLang("ES")} className={`${styles.langOption} ${lang === "ES" ? styles.langActive : ""}`}>ES</button>
-             </div>
+               <div className="flex items-center gap-3 justify-between pt-2">
+                  <span className="text-base font-medium">Idioma</span>
+                  <div className="flex gap-2">
+                    <button onClick={() => setLang("PT")} className={`${styles.langOption} ${lang === "PT" ? styles.langActive : ""}`}>PT</button>
+                    <span>|</span>
+                    <button onClick={() => setLang("EN")} className={`${styles.langOption} ${lang === "EN" ? styles.langActive : ""}`}>EN</button>
+                    <span>|</span>
+                    <button onClick={() => setLang("ES")} className={`${styles.langOption} ${lang === "ES" ? styles.langActive : ""}`}>ES</button>
+                  </div>
+               </div>
+            </div>
           </div>
         </div>
       )}

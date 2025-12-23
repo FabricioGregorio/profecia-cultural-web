@@ -1,16 +1,14 @@
+import Hero from "./components/Hero";
+
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 gap-4">
+    <main className="min-h-screen flex flex-col w-full">
       
-      {/* Adicionei 'font-serif' aqui para puxar a Cinzel */}
-      <h1 className="text-4xl font-bold font-serif text-primary mb-4 text-center">
-        Profecia Cultural
-      </h1>
-      
-      {/* O parágrafo herdará a font-sans (Geist) do body automaticamente */}
-      <p className="text-xl text-center text-muted-foreground">
-        O sistema está online e pronto para receber os dados.
-      </p>
+      <Hero />
+      <section className="py-20 px-4 text-center">
+        <h2 className="text-3xl font-serif text-primary mb-4">Próximos Eventos</h2>
+        <p className="text-muted-foreground">O conteúdo virá do Sanity CMS em breve...</p>
+      </section>
       
     </main>
   );
