@@ -20,5 +20,11 @@ export default defineType({
       title: 'Site do Parceiro (Opcional)',
       type: 'url',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
   ],
 })

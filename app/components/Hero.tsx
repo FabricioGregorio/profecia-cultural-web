@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 const HERO_PHOTOS = [
   { 
@@ -39,6 +40,7 @@ const HERO_PHOTOS = [
 ];
 
 export default function Hero() {
+  const t = useTranslations('hero');
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   return (
@@ -79,7 +81,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-primary mb-6 drop-shadow-md pointer-events-auto"
         >
-          Profecia Cultural
+          {t('title')}
         </motion.h1>
         
         <motion.p 
@@ -88,7 +90,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-lg md:text-2xl text-foreground/90 max-w-2xl font-sans font-medium pointer-events-auto"
         >
-          Sergipanidade, ancestralidade e a força da cultura negra em movimento.
+          {t('subtitle')}
         </motion.p>
       </div>
 

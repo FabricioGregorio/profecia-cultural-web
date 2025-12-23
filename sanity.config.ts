@@ -7,6 +7,7 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
+import {documentInternationalization} from '@sanity/document-internationalization'
 
 import {dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
@@ -25,6 +26,14 @@ export default defineConfig({
   plugins: [
     structureTool({structure}),
     ptBRLocale(),
+    documentInternationalization({
+      supportedLanguages: [
+        {id: 'pt', title: 'Português'},
+        {id: 'en', title: 'English'},
+        {id: 'es', title: 'Español'},
+      ],
+      schemaTypes: ['parceiro'],
+    }),
   ],
 
   schema,

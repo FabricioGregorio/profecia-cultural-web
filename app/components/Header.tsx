@@ -1,21 +1,27 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { Menu, Sun, Moon, X } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useTranslations, useLocale } from 'next-intl';
+import { Link, usePathname, useRouter } from "@/i18n/routing";
 import styles from "../styles/Header.module.css";
 
 export default function Header() {
+  const t = useTranslations('header');
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  
   const { setTheme, theme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [lang, setLang] = useState("PT");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  
-  const pathname = usePathname();
+
+  const switchLocale = (newLocale: string) => {
+    router.replace(pathname, {locale: newLocale});
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -71,10 +77,10 @@ export default function Header() {
 
         <nav className={styles.navDesktop}>
           
-          <Link href="/" className={getLinkClass("/")}>Início</Link>
-          <Link href="/projetos" className={getLinkClass("/projetos")}>Projetos</Link>
-          <Link href="/sobre" className={getLinkClass("/sobre")}>Sobre Nós</Link>
-          <Link href="/contato" className={getLinkClass("/contato")}>Contato</Link>
+          <Link href="/" className={getLinkClass("/")}>{t('home')}</Link>
+          <Link href="/projetos" className={getLinkClass("/projetos")}>{t('projects')}</Link>
+          <Link href="/sobre" className={getLinkClass("/sobre")}>{t('about')}</Link>
+          <Link href="/contato" className={getLinkClass("/contato")}>{t('contact')}</Link>
 
           <div className={styles.separator} />
 
@@ -89,22 +95,22 @@ export default function Header() {
 
           <div className={styles.langSelector}>
             <button 
-              onClick={() => setLang("PT")} 
-              className={`${styles.langOption} ${lang === "PT" ? styles.langActive : ""}`}
+              onClick={() => switchLocale("pt")} 
+              className={`${styles.langOption} ${locale === "pt" ? styles.langActive : ""}`}
             >
               PT
             </button>
             <span>|</span>
             <button 
-              onClick={() => setLang("EN")} 
-              className={`${styles.langOption} ${lang === "EN" ? styles.langActive : ""}`}
+              onClick={() => switchLocale("en")} 
+              className={`${styles.langOption} ${locale === "en" ? styles.langActive : ""}`}
             >
               EN
             </button>
             <span>|</span>
             <button 
-              onClick={() => setLang("ES")} 
-              className={`${styles.langOption} ${lang === "ES" ? styles.langActive : ""}`}
+              onClick={() => switchLocale("es")} 
+              className={`${styles.langOption} ${locale === "es" ? styles.langActive : ""}`}
             >
               ES
             </button>
@@ -126,10 +132,10 @@ export default function Header() {
       {isMenuOpen && (
         <div className={styles.mobileMenu}>
           <div className="flex flex-col gap-6 p-6">
-            <Link href="/" className={getMobileLinkClass("/")} onClick={() => setIsMenuOpen(false)}>Início</Link>
-            <Link href="/projetos" className={getMobileLinkClass("/projetos")} onClick={() => setIsMenuOpen(false)}>Projetos</Link>
-            <Link href="/sobre" className={getMobileLinkClass("/sobre")} onClick={() => setIsMenuOpen(false)}>Sobre Nós</Link>
-            <Link href="/contato" className={getMobileLinkClass("/contato")} onClick={() => setIsMenuOpen(false)}>Contato</Link>
+            <Link href="/" className={getMobileLinkClass("/")} onClick={() => setIsMenuOpen(false)}>{t('home')}</Link>
+            <Link href="/projetos" className={getMobileLinkClass("/projetos")} onClick={() => setIsMenuOpen(false)}>{t('projects')}</Link>
+            <Link href="/sobre" className={getMobileLinkClass("/sobre")} onClick={() => setIsMenuOpen(false)}>{t('about')}</Link>
+            <Link href="/contato" className={getMobileLinkClass("/contato")} onClick={() => setIsMenuOpen(false)}>{t('contact')}</Link>
 
             <div className={styles.mobileTools}>
                <div className="flex items-center gap-3 justify-between border-t border-border pt-4">
@@ -145,11 +151,11 @@ export default function Header() {
                <div className="flex items-center gap-3 justify-between pt-2">
                   <span className="text-base font-medium">Idioma</span>
                   <div className="flex gap-2">
-                    <button onClick={() => setLang("PT")} className={`${styles.langOption} ${lang === "PT" ? styles.langActive : ""}`}>PT</button>
+                    <button onClick={() => switchLocale("pt")} className={`${styles.langOption} ${locale === "pt" ? styles.langActive : ""}`}>PT</button>
                     <span>|</span>
-                    <button onClick={() => setLang("EN")} className={`${styles.langOption} ${lang === "EN" ? styles.langActive : ""}`}>EN</button>
+                    <button onClick={() => switchLocale("en")} className={`${styles.langOption} ${locale === "en" ? styles.langActive : ""}`}>EN</button>
                     <span>|</span>
-                    <button onClick={() => setLang("ES")} className={`${styles.langOption} ${lang === "ES" ? styles.langActive : ""}`}>ES</button>
+                    <button onClick={() => switchLocale("es")} className={`${styles.langOption} ${locale === "es" ? styles.langActive : ""}`}>ES</button>
                   </div>
                </div>
             </div>

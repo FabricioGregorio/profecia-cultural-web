@@ -10,18 +10,20 @@ interface Parceiro {
   url?: string;
 }
 
-async function getParceiros() {
-  const query = `*[_type == "parceiro"] | order(nome asc) {
+async function getParceiros(locale: string) {
+  const query = `*[_type == "parceiro" && (language == $locale || !defined(language))] | order(nome asc) {
     _id,
     nome,
     "logoUrl": logo.asset->url,
     url
   }`;
-  return await client.fetch<Parceiro[]>(query);
+  return await client.fetch<Parceiro[]>(query, { locale });
 }
 
-export default async function Footer() {
-  const parceiros = await getParceiros();
+export default async function Footer({ locale }: { locale: string }) {
+  const parceiros = await getParceiros(locale);
+  const { getTranslations } = await import('next-intl/server');
+  const t = await getTranslations('footer');
 
   return (
     <footer className="border-t border-border bg-background/50 backdrop-blur-sm mt-auto">
@@ -43,13 +45,13 @@ export default async function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs font-sans">
-              Promovendo a cultura e a ancestralidade.
+              {t('description')}
             </p>
           </div>
 
           {/* Coluna 2: Parceiros */}
           <div className="flex flex-col space-y-4">
-            <h3 className="font-bold text-lg">Parcerias realizadas</h3>
+            <h3 className="font-bold text-lg">{t('partners')}</h3>
             <div className="flex flex-col space-y-3">
               {parceiros.length > 0 ? (
                 parceiros.map((parceiro) => (
@@ -76,7 +78,7 @@ export default async function Footer() {
                 ))
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  Nenhum parceiro cadastrado no momento.
+                  {t('noPartners')}
                 </p>
               )}
             </div>
@@ -84,7 +86,7 @@ export default async function Footer() {
 
           {/* Coluna 3: Contatos e Redes */}
           <div className="flex flex-col space-y-4">
-            <h3 className="font-bold text-lg">Conecte-se</h3>
+            <h3 className="font-bold text-lg">{t('connect')}</h3>
             <div className="flex space-x-4">
               <a 
                 href="https://www.instagram.com/profecia.cultural/" 
@@ -123,7 +125,7 @@ export default async function Footer() {
       <div className="border-t border-border">
         <div className="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground text-center md:text-left">
-            © {new Date().getFullYear()} Profecia Cultural. Todos os direitos reservados.
+            © {new Date().getFullYear()} Profecia Cultural. {t('rights')}
           </p>
           
           <Link 
@@ -131,7 +133,7 @@ export default async function Footer() {
             target="_blank"
             className="text-xs text-muted-foreground/30 hover:text-primary hover:opacity-100 transition-all duration-300"
           >
-            Área Administrativa
+            {t('adminArea')}
           </Link>
         </div>
       </div>
