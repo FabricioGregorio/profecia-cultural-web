@@ -1,0 +1,24 @@
+{
+  "header": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Profecia Cultural",
+    "subtitle": "Sergipanity, ancestry and the power of black culture in motion."
+  },
+  "home": {
+    "upcomingEvents": "Upcoming Events",
+    "contentComingSoon": "Content coming from Sanity CMS soon..."
+  },
+  "footer": {
+    "description": "Promoting culture and ancestry.",
+    "partners": "Partnerships",
+    "noPartners": "No partners registered at the moment.",
+    "connect": "Connect",
+    "rights": "All rights reserved.",
+    "adminArea": "Administrative Area"
+  }
+}

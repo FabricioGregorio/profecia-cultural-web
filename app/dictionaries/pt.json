@@ -1,0 +1,24 @@
+{
+  "header": {
+    "home": "Início",
+    "projects": "Projetos",
+    "about": "Sobre Nós",
+    "contact": "Contato"
+  },
+  "hero": {
+    "title": "Profecia Cultural",
+    "subtitle": "Sergipanidade, ancestralidade e a força da cultura negra em movimento."
+  },
+  "home": {
+    "upcomingEvents": "Próximos Eventos",
+    "contentComingSoon": "O conteúdo virá do Sanity CMS em breve..."
+  },
+  "footer": {
+    "description": "Promovendo a cultura e a ancestralidade.",
+    "partners": "Parcerias realizadas",
+    "noPartners": "Nenhum parceiro cadastrado no momento.",
+    "connect": "Conecte-se",
+    "rights": "Todos os direitos reservados.",
+    "adminArea": "Área Administrativa"
+  }
+}
