@@ -41,18 +41,18 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
     },
     {
       key: 'placeholder-2',
-      categoria: 'educacao',
+      categoria: 'evento',
       titulo: t('showcasePlaceholderTitle2'),
       teaser: t('showcasePlaceholderTeaser2'),
-      imageSrc: '/assets/hero/oficina-Vinil.jpg',
+      imageSrc: '/assets/hero/sambaEmRodas2.jpg',
       href: buildWhatsAppLink(t('showcaseWhatsAppMessageGeneric')),
     },
     {
       key: 'placeholder-3',
-      categoria: 'evento',
+      categoria: 'educacao',
       titulo: t('showcasePlaceholderTitle3'),
       teaser: t('showcasePlaceholderTeaser3'),
-      imageSrc: '/assets/hero/sambaEmRodas1Equipe.jpg',
+      imageSrc: '/assets/hero/oficinaDiscoAoSomDeVinil.jpg',
       href: buildWhatsAppLink(t('showcaseWhatsAppMessageGeneric')),
     },
   ]
@@ -94,7 +94,6 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary">
             {t('showcaseTitle')}
           </h2>
-          <p className="mt-4 text-foreground/80 font-sans">{t('showcaseSubtitle')}</p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -104,7 +103,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
               href={card.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-lg border border-border bg-card"
+              className="group relative overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               aria-label={card.titulo}
             >
               <div className="relative aspect-[4/3] w-full">
@@ -112,9 +111,10 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
                   src={card.imageSrc}
                   alt={card.titulo}
                   fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/45" />
+                <div className="absolute inset-0 bg-black/45 transition-transform duration-500 group-hover:scale-105" />
 
                 <div className="absolute left-4 top-4">
                   <span className="inline-flex items-center rounded-full bg-primary px-3 py-1 text-xs font-sans font-semibold text-primary-foreground">
@@ -125,7 +125,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
               <div className="p-6">
                 <h3 className="text-xl font-serif font-bold text-foreground">{card.titulo}</h3>
-                <p className="mt-3 text-sm text-foreground/80 font-sans">{card.teaser}</p>
+                <p className="mt-3 text-sm text-foreground/80 font-sans whitespace-pre-line">{card.teaser}</p>
 
                 <div className="mt-6">
                   <span className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-sans font-semibold text-primary-foreground transition-transform duration-300 group-hover:translate-y-[-1px]">

@@ -2,6 +2,20 @@ type ImpactoProps = {
   impactos: string[]
 }
 
+function renderImpactText(text: string) {
+  const parts = text.split(/(\d[\d.,]*)/g)
+  return parts.map((part, idx) => {
+    if (/^\d[\d.,]*$/.test(part)) {
+      return (
+        <span key={idx} className="text-primary">
+          {part}
+        </span>
+      )
+    }
+    return <span key={idx}>{part}</span>
+  })
+}
+
 export default async function Impacto({ impactos }: ImpactoProps) {
   const { getTranslations } = await import('next-intl/server')
   const t = await getTranslations('home')
@@ -28,11 +42,11 @@ export default async function Impacto({ impactos }: ImpactoProps) {
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {items.slice(0, 3).map((text, idx) => (
             <div
-              key={`${idx}-${text.slice(0, 20)}`}
+              key={idx}
               className="rounded-lg border border-border bg-card p-6"
             >
               <p className="text-2xl md:text-3xl font-serif font-bold text-foreground">
-                {text}
+                {renderImpactText(text)}
               </p>
             </div>
           ))}

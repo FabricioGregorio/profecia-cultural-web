@@ -25,7 +25,7 @@ export default async function ParceirosCTA() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm md:text-base font-sans font-semibold text-primary-foreground"
+              className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm md:text-base font-sans font-semibold text-primary-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
             >
               {t('ctaButton')}
             </a>

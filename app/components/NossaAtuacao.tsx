@@ -49,7 +49,13 @@ export default async function NossaAtuacao() {
               className="overflow-hidden rounded-lg border border-border bg-card"
             >
               <div className="relative aspect-[4/3] w-full">
-                <Image src={pillar.imageSrc} alt={pillar.imageAlt} fill className="object-cover" />
+                <Image
+                  src={pillar.imageSrc}
+                  alt={pillar.imageAlt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 bg-black/35" />
               </div>
 
