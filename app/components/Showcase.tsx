@@ -30,33 +30,6 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
   const { getTranslations } = await import('next-intl/server')
   const t = await getTranslations('home')
 
-  const placeholders: ShowcaseCard[] = [
-    {
-      key: 'placeholder-1',
-      categoria: 'evento',
-      titulo: t('showcasePlaceholderTitle1'),
-      teaser: t('showcasePlaceholderTeaser1'),
-      imageSrc: '/assets/hero/sambaEmRodas1-lotado.jpg',
-      href: buildWhatsAppLink(t('showcaseWhatsAppMessageGeneric')),
-    },
-    {
-      key: 'placeholder-2',
-      categoria: 'evento',
-      titulo: t('showcasePlaceholderTitle2'),
-      teaser: t('showcasePlaceholderTeaser2'),
-      imageSrc: '/assets/hero/sambaEmRodas2.jpg',
-      href: buildWhatsAppLink(t('showcaseWhatsAppMessageGeneric')),
-    },
-    {
-      key: 'placeholder-3',
-      categoria: 'educacao',
-      titulo: t('showcasePlaceholderTitle3'),
-      teaser: t('showcasePlaceholderTeaser3'),
-      imageSrc: '/assets/hero/oficinaDiscoAoSomDeVinil.jpg',
-      href: buildWhatsAppLink(t('showcaseWhatsAppMessageGeneric')),
-    },
-  ]
-
   const realCards: ShowcaseCard[] = eventos.slice(0, 3).map((evento) => {
     const imageSrc = evento.capa
       ? urlFor(evento.capa).width(1200).height(800).fit('crop').url()
@@ -82,10 +55,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
     }
   })
 
-  const cards: ShowcaseCard[] = [...realCards]
-  while (cards.length < 3) {
-    cards.push(placeholders[cards.length])
-  }
+  const cards: ShowcaseCard[] = realCards
 
   return (
     <section className="py-16 md:py-24">
