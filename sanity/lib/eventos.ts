@@ -11,11 +11,15 @@ export type EventoShowcase = {
   capa?: unknown
   impacto?: string
   dataRealizacao?: string
+  periodoRealizacao?: {
+    inicio?: string
+    fim?: string
+  }
   local?: string | string[]
 }
 
 export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
-  const query = groq`*[_type == "eventos"] | order(dataRealizacao desc)[0...$limit]{
+  const query = groq`*[_type == "eventos"] | order(coalesce(periodoRealizacao.inicio, dataRealizacao) desc)[0...$limit]{
     _id,
     titulo,
     "slug": slug.current,
@@ -24,6 +28,7 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
     capa,
     impacto,
     dataRealizacao,
+    periodoRealizacao,
     local
   }`
 
@@ -31,7 +36,7 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
 }
 
 export async function getImpactoEventos(limit = 3): Promise<string[]> {
-  const query = groq`*[_type == "eventos" && defined(impacto) && impacto != ""] | order(dataRealizacao desc)[0...$limit]{
+  const query = groq`*[_type == "eventos" && defined(impacto) && impacto != ""] | order(coalesce(periodoRealizacao.inicio, dataRealizacao) desc)[0...$limit]{
     _id,
     impacto
   }`

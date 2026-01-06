@@ -21,10 +21,37 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'periodoRealizacao',
+      title: 'Período de Realização',
+      description: 'Ex: de 22/10/2025 até 26/10/2025',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'inicio',
+          title: 'Data Inicial',
+          type: 'date',
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: 'fim',
+          title: 'Data Final',
+          type: 'date',
+        }),
+      ],
+      validation: (rule) =>
+        rule.custom((value) => {
+          if (!value) return true
+          if (!value.inicio || !value.fim) return true
+          if (value.fim < value.inicio) return 'A data final deve ser igual ou posterior à data inicial.'
+          return true
+        }),
+    }),
+    defineField({
       name: 'dataRealizacao',
-      title: 'Data de Realização',
+      title: 'Data de Realização (legado)',
+      description: 'Campo antigo (uma única data). Use “Período de Realização” para novos eventos.',
       type: 'date',
-      validation: (rule) => rule.required(),
+      hidden: ({ document }) => Boolean((document as any)?.periodoRealizacao?.inicio),
     }),
     defineField({
       name: 'local',
