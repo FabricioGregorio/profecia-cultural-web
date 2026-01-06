@@ -103,7 +103,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
               href={card.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+              className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               aria-label={card.titulo}
             >
               <div className="relative aspect-[4/3] w-full">
@@ -123,12 +123,12 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="flex flex-1 flex-col p-6">
                 <h3 className="text-xl font-serif font-bold text-foreground">{card.titulo}</h3>
                 <p className="mt-3 text-sm text-foreground/80 font-sans whitespace-pre-line">{card.teaser}</p>
 
-                <div className="mt-6">
-                  <span className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-sans font-semibold text-primary-foreground transition-transform duration-300 group-hover:translate-y-[-1px]">
+                <div className="mt-auto pt-6">
+                  <span className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-sans font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 group-hover:bg-primary/90 group-hover:-translate-y-0.5">
                     {t('showcaseButton')}
                   </span>
                 </div>
