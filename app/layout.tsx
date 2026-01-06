@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   },
   description: "Produtora cultural focada em sergipanidade, ancestralidade e cultura negra. Conheça nossos eventos de samba, rodas de conversas, oficinas educacionais e mostras de cinema.",
   keywords: ["cultura", "sergipe", "produção cultural", "dança", "tobias barreto", "aracaju", "samba", "música", "oficinas", "eventos culturais"],
+  icons: {
+    icon: "/assets/icon.png",
+    apple: "/assets/icon.png",
+  },
 };
 
 export default function RootLayout({
