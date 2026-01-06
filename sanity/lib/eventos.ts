@@ -11,7 +11,7 @@ export type EventoShowcase = {
   capa?: unknown
   impacto?: string
   dataRealizacao?: string
-  local?: string
+  local?: string | string[]
 }
 
 export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {

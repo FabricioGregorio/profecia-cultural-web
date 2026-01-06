@@ -28,9 +28,13 @@ export default defineType({
     }),
     defineField({
       name: 'local',
-      title: 'Local do Evento',
-      description: 'Ex: Teatro Tobias Barreto - Aracaju/SE',
-      type: 'string',
+      title: 'Locais do Evento',
+      description: 'Você pode informar mais de um local (separe por vírgulas). Ex: Tobias Barreto/SE, Aracaju/SE, Salvador/BA',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
     }),
 
     // --- CONTEÚDO PRINCIPAL ---
@@ -139,8 +143,16 @@ export default defineType({
   preview: {
     select: {
       title: 'titulo',
-      subtitle: 'local',
+      local: 'local',
       media: 'capa',
+    },
+    prepare({ title, local, media }) {
+      const subtitle = Array.isArray(local) ? local.join(', ') : local
+      return {
+        title,
+        subtitle,
+        media,
+      }
     },
   },
 })
