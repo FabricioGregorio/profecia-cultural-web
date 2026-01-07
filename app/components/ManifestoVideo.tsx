@@ -19,6 +19,8 @@ export default function ManifestoVideo({
       rel: '0',
       modestbranding: '1',
       playsinline: '1',
+      vq: 'hd1080',
+      hd: '1',
       ...(isPlaying ? { autoplay: '1' } : {}),
     })
 

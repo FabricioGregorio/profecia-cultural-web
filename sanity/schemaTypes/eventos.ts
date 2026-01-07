@@ -51,7 +51,11 @@ export default defineType({
       title: 'Data de Realização (legado)',
       description: 'Campo antigo (uma única data). Use “Período de Realização” para novos eventos.',
       type: 'date',
-      hidden: ({ document }) => Boolean((document as any)?.periodoRealizacao?.inicio),
+      hidden: ({ document }) =>
+        Boolean(
+          (document as unknown as { periodoRealizacao?: { inicio?: string } } | undefined)
+            ?.periodoRealizacao?.inicio
+        ),
     }),
     defineField({
       name: 'local',
