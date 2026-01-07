@@ -47,7 +47,8 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
     return {
       key: evento._id,
-      categoria: evento.categoria || 'outros',
+      categoria:
+        (Array.isArray(evento.categorias) && evento.categorias[0]) || evento.categoria || 'outros',
       titulo: title,
       teaser,
       imageSrc,

@@ -7,6 +7,7 @@ export type EventoShowcase = {
   titulo: string
   slug?: string
   categoria?: string
+  categorias?: string[]
   descricaoCurta?: string
   capa?: unknown
   impacto?: string
@@ -24,6 +25,7 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
     titulo,
     "slug": slug.current,
     categoria,
+    categorias,
     descricaoCurta,
     capa,
     impacto,

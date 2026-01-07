@@ -158,8 +158,10 @@ export default defineType({
     
     defineField({
       name: 'categoria',
-      title: 'Categoria',
+      title: 'Categoria (legado)',
+      description: 'Campo antigo (uma categoria). Use “Categorias” para novos eventos.',
       type: 'string',
+      hidden: ({ document }) => Boolean((document as unknown as { categorias?: string[] } | undefined)?.categorias?.length),
       options: {
         list: [
           { title: 'Teatro', value: 'teatro' },
@@ -168,6 +170,24 @@ export default defineType({
           { title: 'Evento Cultural', value: 'evento' },
           { title: 'Educação / Oficina', value: 'educacao' },
         ],
+      },
+    }),
+
+    defineField({
+      name: 'categorias',
+      title: 'Categorias',
+      description: 'Selecione uma ou mais categorias.',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Teatro', value: 'teatro' },
+          { title: 'Dança', value: 'danca' },
+          { title: 'Audiovisual', value: 'audiovisual' },
+          { title: 'Evento Cultural', value: 'evento' },
+          { title: 'Educação / Oficina', value: 'educacao' },
+        ],
+        layout: 'tags',
       },
     }),
   ],
