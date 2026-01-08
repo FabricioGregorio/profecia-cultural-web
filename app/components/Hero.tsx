@@ -21,7 +21,7 @@ const HERO_PHOTOS = [
   },
   { 
     id: 3, 
-    src: "/assets/hero/sambaEmRodas1-lotado.jpg", 
+    src: "/assets/hero/sambaEmRodas1-artistas.jpg", 
     alt: "Samba em Rodas 1", 
     className: "col-span-1 row-span-1" 
   },

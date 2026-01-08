@@ -21,7 +21,7 @@ export default async function NossaAtuacao() {
     {
       title: t('atuacaoPillar2Title'),
       description: t('atuacaoPillar2Desc'),
-      imageSrc: '/assets/hero/oficina-Vinil.jpg',
+      imageSrc: '/assets/hero/educacao.jpg',
       imageAlt: t('atuacaoPillar2Title'),
     },
     {

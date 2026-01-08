@@ -33,7 +33,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
   const realCards: ShowcaseCard[] = eventos.slice(0, 3).map((evento) => {
     const imageSrc = evento.capa
       ? urlFor(evento.capa).width(1200).height(800).fit('crop').url()
-      : '/assets/hero/sambaEmRodas1-lotado.jpg'
+      : '/assets/placeholder/evento-placeholder.png'
 
     const teaser = (evento.descricaoCurta || '').trim() || t('showcaseFallbackTeaser')
 
