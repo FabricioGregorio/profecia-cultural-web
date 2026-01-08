@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
 import { apiVersion } from '../env'
+import { isYoutubeOrVimeoUrl } from '../lib/video'
 
 async function isUniqueEventoSlug(
   slug: string,
@@ -25,22 +26,6 @@ async function isUniqueEventoSlug(
     draftId: `drafts.${id}`,
     publishedId: id,
   })
-}
-
-function isYoutubeOrVimeoUrl(url: string) {
-  try {
-    const parsed = new URL(url)
-    const host = parsed.hostname.toLowerCase()
-    return (
-      host === 'youtube.com' ||
-      host.endsWith('.youtube.com') ||
-      host === 'youtu.be' ||
-      host === 'vimeo.com' ||
-      host.endsWith('.vimeo.com')
-    )
-  } catch {
-    return false
-  }
 }
 
 export default defineType({
