@@ -5,7 +5,6 @@
  */
 
 import {defineConfig} from 'sanity'
-import {PublishAction} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
 import {documentInternationalization} from '@sanity/document-internationalization'
@@ -40,8 +39,10 @@ export default defineConfig({
 
   document: {
     actions: (prev, context) => {
-      if (context.schemaType === 'eventos') {
-        return prev.map((action) => (action === PublishAction ? PublishOrSaveAction : action))
+      if (context.schemaType === 'eventos' || context.schemaType === 'parceiro') {
+        return prev.map((previousAction) =>
+          previousAction.action === 'publish' ? PublishOrSaveAction : previousAction,
+        )
       }
 
       return prev

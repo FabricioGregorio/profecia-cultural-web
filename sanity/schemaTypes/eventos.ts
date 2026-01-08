@@ -3,11 +3,15 @@ import { defineField, defineType } from 'sanity'
 import { apiVersion } from '../env'
 
 async function isUniqueEventoSlug(
-  value: { current?: string } | undefined,
-  context: { document?: { _id?: string }; getClient: (opts: { apiVersion: string }) => { fetch: (q: string, p: Record<string, unknown>) => Promise<boolean> } }
+  slug: string,
+  context: {
+    document?: { _id?: string }
+    getClient: (opts: { apiVersion: string }) => {
+      fetch: (q: string, p: Record<string, unknown>) => Promise<boolean>
+    }
+  }
 ) {
-  const current = value?.current
-  if (!current) return true
+  if (!slug) return true
 
   const docId = context.document?._id || ''
   const id = docId.replace(/^drafts\./, '')
@@ -17,7 +21,7 @@ async function isUniqueEventoSlug(
     'count(*[_type == "eventos" && slug.current == $slug && !(_id in [$draftId, $publishedId])]) == 0'
 
   return client.fetch(query, {
-    slug: current,
+    slug,
     draftId: `drafts.${id}`,
     publishedId: id,
   })
@@ -60,10 +64,7 @@ export default defineType({
       options: { source: 'titulo', maxLength: 96, isUnique: isUniqueEventoSlug },
       validation: (rule) =>
         rule.required().custom(async (value, context) => {
-          const isUnique = await isUniqueEventoSlug(
-            value as { current?: string } | undefined,
-            context as any
-          )
+          const isUnique = await isUniqueEventoSlug(value?.current || '', context as any)
           return isUnique || 'Já existe um evento com esse link/slug.'
         }),
     }),
@@ -80,7 +81,7 @@ export default defineType({
           options: {
             dateFormat: 'DD/MM/YYYY',
             calendarTodayLabel: 'Hoje',
-          },
+          } as any,
           validation: (rule) => rule.required(),
         }),
         defineField({
@@ -90,7 +91,7 @@ export default defineType({
           options: {
             dateFormat: 'DD/MM/YYYY',
             calendarTodayLabel: 'Hoje',
-          },
+          } as any,
         }),
       ],
       validation: (rule) =>
@@ -122,7 +123,7 @@ export default defineType({
       options: {
         dateFormat: 'DD/MM/YYYY',
         calendarTodayLabel: 'Hoje',
-      },
+      } as any,
       hidden: ({ document }) =>
         Boolean(
           (document as unknown as { periodoRealizacao?: { inicio?: string } } | undefined)

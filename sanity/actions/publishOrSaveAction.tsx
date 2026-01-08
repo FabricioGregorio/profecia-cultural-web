@@ -8,7 +8,7 @@ export const PublishOrSaveAction: DocumentActionComponent = (props) => {
   return {
     label: published ? 'Salvar alterações' : 'Publicar',
     tone: 'positive',
-    disabled: publish.disabled,
+    disabled: Boolean(publish.disabled),
     onHandle: () => {
       publish.execute()
       onComplete()
