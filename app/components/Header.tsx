@@ -78,7 +78,7 @@ export default function Header() {
         <nav className={styles.navDesktop}>
           
           <Link href="/" className={getLinkClass("/")}>{t('home')}</Link>
-          <Link href="/projetos" className={getLinkClass("/projetos")}>{t('projects')}</Link>
+          <Link href="/eventos" className={getLinkClass("/eventos")}>{t('events')}</Link>
           <Link href="/sobre" className={getLinkClass("/sobre")}>{t('about')}</Link>
           <Link href="/contato" className={getLinkClass("/contato")}>{t('contact')}</Link>
 
@@ -133,7 +133,7 @@ export default function Header() {
         <div className={styles.mobileMenu}>
           <div className="flex flex-col gap-6 p-6">
             <Link href="/" className={getMobileLinkClass("/")} onClick={() => setIsMenuOpen(false)}>{t('home')}</Link>
-            <Link href="/projetos" className={getMobileLinkClass("/projetos")} onClick={() => setIsMenuOpen(false)}>{t('projects')}</Link>
+            <Link href="/eventos" className={getMobileLinkClass("/eventos")} onClick={() => setIsMenuOpen(false)}>{t('events')}</Link>
             <Link href="/sobre" className={getMobileLinkClass("/sobre")} onClick={() => setIsMenuOpen(false)}>{t('about')}</Link>
             <Link href="/contato" className={getMobileLinkClass("/contato")} onClick={() => setIsMenuOpen(false)}>{t('contact')}</Link>
 
