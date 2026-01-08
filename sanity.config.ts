@@ -5,6 +5,7 @@
  */
 
 import {defineConfig} from 'sanity'
+import {PublishAction} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {ptBRLocale} from '@sanity/locale-pt-br'
 import {documentInternationalization} from '@sanity/document-internationalization'
@@ -12,6 +13,7 @@ import {documentInternationalization} from '@sanity/document-internationalizatio
 import {dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schemaTypes'
 import {structure} from './sanity/structure'
+import {PublishOrSaveAction} from './sanity/actions/publishOrSaveAction'
 
 export default defineConfig({
   basePath: '/studio',
@@ -35,6 +37,16 @@ export default defineConfig({
       schemaTypes: ['parceiro'],
     }),
   ],
+
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === 'eventos') {
+        return prev.map((action) => (action === PublishAction ? PublishOrSaveAction : action))
+      }
+
+      return prev
+    },
+  },
 
   schema,
 })

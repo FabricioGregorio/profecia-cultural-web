@@ -77,12 +77,20 @@ export default defineType({
           name: 'inicio',
           title: 'Data Inicial',
           type: 'date',
+          options: {
+            dateFormat: 'DD/MM/YYYY',
+            calendarTodayLabel: 'Hoje',
+          },
           validation: (rule) => rule.required(),
         }),
         defineField({
           name: 'fim',
           title: 'Data Final',
           type: 'date',
+          options: {
+            dateFormat: 'DD/MM/YYYY',
+            calendarTodayLabel: 'Hoje',
+          },
         }),
       ],
       validation: (rule) =>
@@ -111,6 +119,10 @@ export default defineType({
       title: 'Data de Realização (legado)',
       description: 'Campo antigo (uma única data). Use “Período de Realização” para novos eventos.',
       type: 'date',
+      options: {
+        dateFormat: 'DD/MM/YYYY',
+        calendarTodayLabel: 'Hoje',
+      },
       hidden: ({ document }) =>
         Boolean(
           (document as unknown as { periodoRealizacao?: { inicio?: string } } | undefined)
