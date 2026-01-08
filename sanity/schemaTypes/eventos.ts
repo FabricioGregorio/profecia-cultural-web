@@ -1,5 +1,28 @@
 import { defineField, defineType } from 'sanity'
 
+import { apiVersion } from '../env'
+
+async function isUniqueEventoSlug(
+  value: { current?: string } | undefined,
+  context: { document?: { _id?: string }; getClient: (opts: { apiVersion: string }) => { fetch: (q: string, p: Record<string, unknown>) => Promise<boolean> } }
+) {
+  const current = value?.current
+  if (!current) return true
+
+  const docId = context.document?._id || ''
+  const id = docId.replace(/^drafts\./, '')
+
+  const client = context.getClient({ apiVersion })
+  const query =
+    'count(*[_type == "eventos" && slug.current == $slug && !(_id in [$draftId, $publishedId])]) == 0'
+
+  return client.fetch(query, {
+    slug: current,
+    draftId: `drafts.${id}`,
+    publishedId: id,
+  })
+}
+
 export default defineType({
   name: 'eventos',
   title: 'Eventos e Realizações',
@@ -17,7 +40,7 @@ export default defineType({
       title: 'Slug (URL da página)',
       description: 'Clique em "Generate" para criar o link automático',
       type: 'slug',
-      options: { source: 'titulo', maxLength: 96 },
+      options: { source: 'titulo', maxLength: 96, isUnique: isUniqueEventoSlug },
       validation: (rule) => rule.required(),
     }),
     defineField({

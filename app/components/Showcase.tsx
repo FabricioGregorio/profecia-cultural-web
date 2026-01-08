@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { urlFor } from '@/sanity/lib/image'
 import type { EventoShowcase } from '@/sanity/lib/eventos'
-import { buildWhatsAppLink } from '@/app/lib/whatsapp'
+import { Link } from '@/i18n/routing'
 
 type ShowcaseProps = {
   eventos: EventoShowcase[]
@@ -23,7 +23,7 @@ function categoryLabelKey(value: string) {
   if (value === 'audiovisual') return 'categories.audiovisual'
   if (value === 'evento') return 'categories.evento'
   if (value === 'educacao') return 'categories.educacao'
-  return 'categories.outros'
+  return undefined
 }
 
 export default async function Showcase({ eventos }: ShowcaseProps) {
@@ -39,16 +39,11 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
     const title = (evento.titulo || '').trim() || t('showcaseFallbackTitle')
 
-    const href = buildWhatsAppLink(
-      t('showcaseWhatsAppMessage', {
-        title,
-      })
-    )
+    const href = evento.slug ? `/eventos/${evento.slug}` : '/eventos'
 
     return {
       key: evento._id,
-      categoria:
-        (Array.isArray(evento.categorias) && evento.categorias[0]) || evento.categoria || 'outros',
+      categoria: (Array.isArray(evento.categorias) && evento.categorias[0]) || 'outros',
       titulo: title,
       teaser,
       imageSrc,
@@ -69,11 +64,9 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((card) => (
-            <a
+            <Link
               key={card.key}
               href={card.href}
-              target="_blank"
-              rel="noopener noreferrer"
               className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               aria-label={card.titulo}
             >
@@ -89,7 +82,12 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
                 <div className="absolute left-4 top-4">
                   <span className="inline-flex items-center rounded-full bg-primary px-3 py-1 text-xs font-sans font-semibold text-primary-foreground">
-                    {t(categoryLabelKey(card.categoria))}
+                    {(() => {
+                      const key = categoryLabelKey(card.categoria)
+                      if (key) return t(key)
+                      if (card.categoria === 'outros') return t('categories.outros')
+                      return card.categoria
+                    })()}
                   </span>
                 </div>
               </div>
@@ -104,7 +102,7 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
