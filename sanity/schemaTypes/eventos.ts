@@ -23,6 +23,22 @@ async function isUniqueEventoSlug(
   })
 }
 
+function isYoutubeOrVimeoUrl(url: string) {
+  try {
+    const parsed = new URL(url)
+    const host = parsed.hostname.toLowerCase()
+    return (
+      host === 'youtube.com' ||
+      host.endsWith('.youtube.com') ||
+      host === 'youtu.be' ||
+      host === 'vimeo.com' ||
+      host.endsWith('.vimeo.com')
+    )
+  } catch {
+    return false
+  }
+}
+
 export default defineType({
   name: 'eventos',
   title: 'Eventos e Realizações',
@@ -33,7 +49,8 @@ export default defineType({
       name: 'titulo',
       title: 'Título do Evento',
       type: 'string',
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.required().max(80).warning('Títulos muito longos podem quebrar o layout (recomendado até 80 caracteres).'),
     }),
     defineField({
       name: 'slug',
@@ -41,7 +58,14 @@ export default defineType({
       description: 'Clique em "Generate" para criar o link automático',
       type: 'slug',
       options: { source: 'titulo', maxLength: 96, isUnique: isUniqueEventoSlug },
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.required().custom(async (value, context) => {
+          const isUnique = await isUniqueEventoSlug(
+            value as { current?: string } | undefined,
+            context as any
+          )
+          return isUnique || 'Já existe um evento com esse link/slug.'
+        }),
     }),
     defineField({
       name: 'periodoRealizacao',
@@ -62,7 +86,20 @@ export default defineType({
         }),
       ],
       validation: (rule) =>
-        rule.custom((value) => {
+        rule.custom((value, context) => {
+          const document = context.document as
+            | {
+                dataRealizacao?: string
+              }
+            | undefined
+
+          const hasPeriodoInicio = Boolean(value?.inicio)
+          const hasDataLegado = Boolean(document?.dataRealizacao)
+
+          if (!hasPeriodoInicio && !hasDataLegado) {
+            return 'Informe uma data: “Período de Realização” (Data Inicial) ou “Data de Realização (legado)”.'
+          }
+
           if (!value) return true
           if (!value.inicio || !value.fim) return true
           if (value.fim < value.inicio) return 'A data final deve ser igual ou posterior à data inicial.'
@@ -79,16 +116,49 @@ export default defineType({
           (document as unknown as { periodoRealizacao?: { inicio?: string } } | undefined)
             ?.periodoRealizacao?.inicio
         ),
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const document = context.document as
+            | {
+                periodoRealizacao?: {
+                  inicio?: string
+                }
+              }
+            | undefined
+
+          const hasPeriodoInicio = Boolean(document?.periodoRealizacao?.inicio)
+          const hasDataLegado = Boolean(value)
+
+          if (!hasPeriodoInicio && !hasDataLegado) {
+            return 'Informe uma data: “Período de Realização” (Data Inicial) ou “Data de Realização (legado)”.'
+          }
+
+          return true
+        }),
     }),
     defineField({
       name: 'local',
       title: 'Locais do Evento',
       description: 'Você pode informar mais de um local (separe por vírgulas). Ex: Tobias Barreto/SE, Aracaju/SE, Salvador/BA',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [
+        {
+          type: 'string',
+          validation: (rule) =>
+            rule
+              .max(60)
+              .warning('Local muito longo pode quebrar o layout (recomendado até 60 caracteres).'),
+        },
+      ],
       options: {
         layout: 'tags',
       },
+      validation: (rule) =>
+        rule.required().min(1).custom((value) => {
+          if (!Array.isArray(value)) return true
+          const hasAtLeastOne = value.some((item) => typeof item === 'string' && item.trim().length > 0)
+          return hasAtLeastOne || 'Informe pelo menos 1 local.'
+        }),
     }),
 
     // --- CONTEÚDO PRINCIPAL ---
@@ -132,7 +202,11 @@ export default defineType({
               type: 'string',
               title: 'Legenda da Foto',
               description: 'Opcional. Ex: "Momento da Roda de Conversa"',
-              initialValue: ''
+              initialValue: '',
+              validation: (rule) =>
+                rule
+                  .max(120)
+                  .warning('Legenda muito longa pode quebrar o layout (recomendado até 120 caracteres).'),
             }
           ]
         }
@@ -152,12 +226,22 @@ export default defineType({
             {
               name: 'url',
               type: 'url',
-              title: 'URL do Vídeo'
+              title: 'URL do Vídeo',
+              validation: (rule) =>
+                rule.required().custom((value) => {
+                  if (!value) return 'Informe a URL do vídeo.'
+                  if (typeof value !== 'string') return 'URL inválida.'
+                  return isYoutubeOrVimeoUrl(value) || 'Use um link do YouTube ou Vimeo.'
+                }),
             },
             {
               name: 'titulo',
               type: 'string',
-              title: 'Título do Vídeo (Opcional)'
+              title: 'Título do Vídeo (Opcional)',
+              validation: (rule) =>
+                rule
+                  .max(80)
+                  .warning('Título de vídeo muito longo pode quebrar o layout (recomendado até 80 caracteres).'),
             }
           ],
           preview: {
@@ -168,32 +252,6 @@ export default defineType({
           }
         }
       ]
-    }),
-
-    // --- IMPACTO E CATEGORIA ---
-    defineField({
-      name: 'impacto',
-      title: 'Frase de Impacto ou Depoimento',
-      description: 'Ex: "Mais de 200 pessoas impactadas" ou um elogio recebido.',
-      type: 'text',
-      rows: 2,
-    }),
-    
-    defineField({
-      name: 'categoria',
-      title: 'Categoria (legado)',
-      description: 'Campo antigo (uma categoria). Use “Categorias” para novos eventos.',
-      type: 'string',
-      hidden: ({ document }) => Boolean((document as unknown as { categorias?: string[] } | undefined)?.categorias?.length),
-      options: {
-        list: [
-          { title: 'Teatro', value: 'teatro' },
-          { title: 'Dança', value: 'danca' },
-          { title: 'Audiovisual', value: 'audiovisual' },
-          { title: 'Evento Cultural', value: 'evento' },
-          { title: 'Educação / Oficina', value: 'educacao' },
-        ],
-      },
     }),
 
     defineField({

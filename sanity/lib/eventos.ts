@@ -19,11 +19,9 @@ export type EventoShowcase = {
   _id: string
   titulo: string
   slug?: string
-  categoria?: string
   categorias?: string[]
   descricaoCurta?: string
   capa?: SanityImage
-  impacto?: string
   dataRealizacao?: string
   periodoRealizacao?: {
     inicio?: string
@@ -43,11 +41,9 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
     _id,
     titulo,
     "slug": slug.current,
-    categoria,
     categorias,
     descricaoCurta,
     capa,
-    impacto,
     dataRealizacao,
     periodoRealizacao,
     local
@@ -61,28 +57,16 @@ export async function getEventoPorSlug(slug: string): Promise<EventoDetalhado | 
     _id,
     titulo,
     "slug": slug.current,
-    categoria,
     categorias,
     descricaoCurta,
     conceito,
     capa,
     galeria,
     videos,
-    impacto,
     dataRealizacao,
     periodoRealizacao,
     local
   }`
 
   return client.fetch<EventoDetalhado | null>(query, { slug })
-}
-
-export async function getImpactoEventos(limit = 3): Promise<string[]> {
-  const query = groq`*[_type == "eventos" && defined(impacto) && impacto != ""] | order(coalesce(periodoRealizacao.inicio, dataRealizacao) desc)[0...$limit]{
-    _id,
-    impacto
-  }`
-
-  const results = await client.fetch<Array<{ _id: string; impacto: string }>>(query, { limit })
-  return results.map((r) => r.impacto).filter(Boolean)
 }

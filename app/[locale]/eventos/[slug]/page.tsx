@@ -169,12 +169,6 @@ export default async function EventoPage({ params }: Props) {
           </div>
         )}
 
-        {/* Frase de Impacto */}
-        {evento.impacto && (
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-6 text-center">
-            <p className="text-lg italic text-foreground">&ldquo;{evento.impacto}&rdquo;</p>
-          </div>
-        )}
       </div>
     </main>
   );
