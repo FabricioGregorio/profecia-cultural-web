@@ -17,8 +17,16 @@ export default async function EventoPage({ params }: Props) {
 
   if (!evento) return notFound();
 
-  const dataInicio = evento.periodoRealizacao?.inicio || evento.dataRealizacao;
-  const dataFim = evento.periodoRealizacao?.fim;
+  const datasAvulsas = Array.isArray(evento.datasRealizacao)
+    ? evento.datasRealizacao.filter(Boolean)
+    : [];
+
+  const dataInicio = datasAvulsas.length > 0
+    ? datasAvulsas[0]
+    : (evento.periodoRealizacao?.inicio || evento.dataRealizacao);
+  const dataFim = datasAvulsas.length > 0
+    ? undefined
+    : evento.periodoRealizacao?.fim;
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return "";
@@ -57,8 +65,19 @@ export default async function EventoPage({ params }: Props) {
               <div>
                 <p className="font-semibold text-sm uppercase tracking-wide mb-1">Data</p>
                 <p>
-                  {formatDate(dataInicio)}
-                  {dataFim && dataFim !== dataInicio && ` — ${formatDate(dataFim)}`}
+                  {datasAvulsas.length > 1
+                    ? datasAvulsas
+                        .slice()
+                        .sort()
+                        .map((d) => formatDate(d))
+                        .filter(Boolean)
+                        .join(' • ')
+                    : (
+                      <>
+                        {formatDate(dataInicio)}
+                        {dataFim && dataFim !== dataInicio && ` — ${formatDate(dataFim)}`}
+                      </>
+                    )}
                 </p>
               </div>
             )}

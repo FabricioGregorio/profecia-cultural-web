@@ -23,6 +23,7 @@ export type EventoShowcase = {
   descricaoCurta?: string
   capa?: SanityImage
   dataRealizacao?: string
+  datasRealizacao?: string[]
   periodoRealizacao?: {
     inicio?: string
     fim?: string
@@ -37,7 +38,7 @@ export type EventoDetalhado = EventoShowcase & {
 }
 
 export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
-  const query = groq`*[_type == "eventos" && defined(slug.current)] | order(coalesce(periodoRealizacao.inicio, dataRealizacao) desc)[0...$limit]{
+  const query = groq`*[_type == "eventos" && defined(slug.current)] | order(coalesce(periodoRealizacao.inicio, dataRealizacao, datasRealizacao[0]) desc)[0...$limit]{
     _id,
     titulo,
     "slug": slug.current,
@@ -45,6 +46,7 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
     descricaoCurta,
     capa,
     dataRealizacao,
+    datasRealizacao,
     periodoRealizacao,
     local
   }`
@@ -64,6 +66,7 @@ export async function getEventoPorSlug(slug: string): Promise<EventoDetalhado | 
     galeria,
     videos,
     dataRealizacao,
+    datasRealizacao,
     periodoRealizacao,
     local
   }`

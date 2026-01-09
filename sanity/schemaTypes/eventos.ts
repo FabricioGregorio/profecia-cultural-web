@@ -3,6 +3,11 @@ import { defineField, defineType } from 'sanity'
 import { apiVersion } from '../env'
 import { isYoutubeOrVimeoUrl } from '../lib/video'
 
+const BR_DATE_OPTIONS = {
+  dateFormat: 'DD/MM/YYYY',
+  calendarTodayLabel: 'Hoje',
+} as unknown as { dateFormat?: string }
+
 async function isUniqueEventoSlug(
   slug: string,
   context: {
@@ -28,6 +33,8 @@ async function isUniqueEventoSlug(
   })
 }
 
+type UniqueEventoSlugContext = Parameters<typeof isUniqueEventoSlug>[1]
+
 export default defineType({
   name: 'eventos',
   title: 'Eventos e Realizações',
@@ -49,34 +56,28 @@ export default defineType({
       options: { source: 'titulo', maxLength: 96, isUnique: isUniqueEventoSlug },
       validation: (rule) =>
         rule.required().custom(async (value, context) => {
-          const isUnique = await isUniqueEventoSlug(value?.current || '', context as any)
+          const isUnique = await isUniqueEventoSlug(value?.current || '', context as UniqueEventoSlugContext)
           return isUnique || 'Já existe um evento com esse link/slug.'
         }),
     }),
     defineField({
       name: 'periodoRealizacao',
       title: 'Período de Realização',
-      description: 'Ex: de 22/10/2025 até 26/10/2025',
+      description: 'Use quando as datas forem consecutivas (intervalo). Ex: de 22/10/2025 até 26/10/2025. Para datas separadas, use “Datas de Realização (avulsas)”.',
       type: 'object',
       fields: [
         defineField({
           name: 'inicio',
           title: 'Data Inicial',
           type: 'date',
-          options: {
-            dateFormat: 'DD/MM/YYYY',
-            calendarTodayLabel: 'Hoje',
-          } as any,
+          options: BR_DATE_OPTIONS,
           validation: (rule) => rule.required(),
         }),
         defineField({
           name: 'fim',
           title: 'Data Final',
           type: 'date',
-          options: {
-            dateFormat: 'DD/MM/YYYY',
-            calendarTodayLabel: 'Hoje',
-          } as any,
+          options: BR_DATE_OPTIONS,
         }),
       ],
       validation: (rule) =>
@@ -84,14 +85,16 @@ export default defineType({
           const document = context.document as
             | {
                 dataRealizacao?: string
+                datasRealizacao?: string[]
               }
             | undefined
 
           const hasPeriodoInicio = Boolean(value?.inicio)
+          const hasDatasAvulsas = Array.isArray(document?.datasRealizacao) && document!.datasRealizacao!.length > 0
           const hasDataLegado = Boolean(document?.dataRealizacao)
 
-          if (!hasPeriodoInicio && !hasDataLegado) {
-            return 'Informe uma data: “Período de Realização” (Data Inicial) ou “Data de Realização (legado)”.'
+          if (!hasPeriodoInicio && !hasDatasAvulsas && !hasDataLegado) {
+            return 'Informe uma data: “Período de Realização” (Data Inicial), “Datas de Realização (avulsas)” ou “Data de Realização (legado)”.'
           }
 
           if (!value) return true
@@ -100,20 +103,47 @@ export default defineType({
           return true
         }),
     }),
+
+    defineField({
+      name: 'datasRealizacao',
+      title: 'Datas de Realização (avulsas)',
+      description: 'Use quando o evento acontecer em dias não consecutivos. Ex: 10/02/2026 e 17/02/2026.',
+      type: 'array',
+      of: [
+        {
+          type: 'date',
+          options: BR_DATE_OPTIONS,
+        },
+      ],
+      validation: (rule) =>
+        rule.custom((value) => {
+          if (value === undefined) return true
+          if (!Array.isArray(value)) return true
+
+          const dates = value.filter((item) => typeof item === 'string' && item.trim().length > 0)
+          if (dates.length === 0) return 'Informe pelo menos 1 data em “Datas de Realização (avulsas)”.'
+
+          const uniqueDates = new Set(dates)
+          if (uniqueDates.size !== dates.length) return 'Não repita a mesma data em “Datas de Realização (avulsas)”.'
+
+          return true
+        }),
+    }),
+
     defineField({
       name: 'dataRealizacao',
       title: 'Data de Realização (legado)',
       description: 'Campo antigo (uma única data). Use “Período de Realização” para novos eventos.',
       type: 'date',
-      options: {
-        dateFormat: 'DD/MM/YYYY',
-        calendarTodayLabel: 'Hoje',
-      } as any,
-      hidden: ({ document }) =>
-        Boolean(
-          (document as unknown as { periodoRealizacao?: { inicio?: string } } | undefined)
-            ?.periodoRealizacao?.inicio
-        ),
+      options: BR_DATE_OPTIONS,
+      hidden: ({ document }) => {
+        const doc = document as unknown as
+          | { periodoRealizacao?: { inicio?: string }; datasRealizacao?: string[] }
+          | undefined
+
+        return Boolean(doc?.periodoRealizacao?.inicio) ||
+          (Array.isArray(doc?.datasRealizacao) && doc!.datasRealizacao!.length > 0)
+      },
       validation: (rule) =>
         rule.custom((value, context) => {
           const document = context.document as
@@ -121,14 +151,16 @@ export default defineType({
                 periodoRealizacao?: {
                   inicio?: string
                 }
+                datasRealizacao?: string[]
               }
             | undefined
 
           const hasPeriodoInicio = Boolean(document?.periodoRealizacao?.inicio)
+          const hasDatasAvulsas = Array.isArray(document?.datasRealizacao) && document!.datasRealizacao!.length > 0
           const hasDataLegado = Boolean(value)
 
-          if (!hasPeriodoInicio && !hasDataLegado) {
-            return 'Informe uma data: “Período de Realização” (Data Inicial) ou “Data de Realização (legado)”.'
+          if (!hasPeriodoInicio && !hasDatasAvulsas && !hasDataLegado) {
+            return 'Informe uma data: “Período de Realização” (Data Inicial), “Datas de Realização (avulsas)” ou “Data de Realização (legado)”.'
           }
 
           return true
@@ -137,7 +169,7 @@ export default defineType({
     defineField({
       name: 'local',
       title: 'Locais do Evento',
-      description: 'Você pode informar mais de um local (separe por vírgulas). Ex: Tobias Barreto/SE, Aracaju/SE, Salvador/BA',
+      description: 'Você pode informar mais de um local (separe por vírgulas e dê enter). Ex: Tobias Barreto/SE, Aracaju/SE, Salvador/BA',
       type: 'array',
       of: [
         {
