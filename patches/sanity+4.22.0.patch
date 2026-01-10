@@ -1,0 +1,12 @@
+diff --git a/node_modules/sanity/lib/index.js b/node_modules/sanity/lib/index.js
+index 814ebb9..fe3eee5 100644
+--- a/node_modules/sanity/lib/index.js
++++ b/node_modules/sanity/lib/index.js
+@@ -22453,6 +22453,7 @@ const Item = forwardRef(function(props2, ref) {
+     sortable,
+     ...rest
+   } = props2, $[0] = props2, $[1] = rest, $[2] = sortable) : (rest = $[1], sortable = $[2]);
++  sortable || delete rest.disableTransition;
+   let t0;
+   $[3] !== ref || $[4] !== rest || $[5] !== sortable ? (t0 = sortable ? /* @__PURE__ */ jsx(SortableListItem, { ref, ...rest }) : /* @__PURE__ */ jsx(ListItem$2, { ref, ...rest }), $[3] = ref, $[4] = rest, $[5] = sortable, $[6] = t0) : t0 = $[6];
+   let t1;

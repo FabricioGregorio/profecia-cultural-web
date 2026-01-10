@@ -40,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning={true}>
       <body
+        suppressHydrationWarning={true}
         className={`${notoSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased font-sans`}
       >
         {children}
