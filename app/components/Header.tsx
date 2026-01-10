@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Menu, Sun, Moon, X } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import styles from "../styles/Header.module.css";
@@ -13,9 +12,7 @@ export default function Header() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  
-  const { setTheme, theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,9 +21,6 @@ export default function Header() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -39,10 +33,6 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMenuOpen(false);
   }, [pathname]);
-
-  if (!mounted) {
-    return <div className="h-20 w-full fixed top-0 z-50 bg-transparent" />;
-  }
 
   const getLinkClass = (path: string) => {
     return `${styles.navLink} ${pathname === path ? styles.navLinkActive : ""}`;
@@ -84,15 +74,6 @@ export default function Header() {
           <Link href="/contato" className={getLinkClass("/contato")}>{t('contact')}</Link>
 
           <div className={styles.separator} />
-
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="relative p-1 rounded-full hover:text-primary transition-colors w-8 h-8 flex items-center justify-center"
-            aria-label="Alternar Tema"
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 absolute" />
-            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          </button>
 
           <div className={styles.langSelector}>
             <button 
@@ -140,16 +121,6 @@ export default function Header() {
 
             <div className={styles.mobileTools}>
                <div className="flex items-center gap-3 justify-between border-t border-border pt-4">
-                  <span className="text-base font-medium">Alternar Tema</span>
-                  <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="p-2 rounded-full bg-accent text-accent-foreground"
-                  >
-                    {theme === "dark" ? <Moon size={20} /> : <Sun size={20} />}
-                  </button>
-               </div>
-
-               <div className="flex items-center gap-3 justify-between pt-2">
                   <span className="text-base font-medium">Idioma</span>
                   <div className="flex gap-2">
                     <button onClick={() => switchLocale("pt")} className={`${styles.langOption} ${locale === "pt" ? styles.langActive : ""}`}>PT</button>

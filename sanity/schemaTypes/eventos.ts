@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 import { apiVersion } from '../env'
 import { isYoutubeOrVimeoUrl } from '../lib/video'
@@ -249,8 +249,9 @@ export default defineType({
       description: 'Cole os links do YouTube ou Vimeo aqui.',
       type: 'array',
       of: [
-        {
+        defineArrayMember({
           type: 'object',
+          name: 'videoLink',
           title: 'Link de Vídeo',
           fields: [
             {
@@ -280,7 +281,7 @@ export default defineType({
               subtitle: 'url'
             }
           }
-        }
+        })
       ]
     }),
 
@@ -298,8 +299,30 @@ export default defineType({
           { title: 'Evento Cultural', value: 'evento' },
           { title: 'Educação / Oficina', value: 'educacao' },
         ],
-        layout: 'tags',
       },
+    }),
+
+    defineField({
+      name: 'categoriaPrincipal',
+      title: 'Categoria Principal (para exibição)',
+      description: 'Define qual categoria aparece no card da Home (Showcase).',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Teatro', value: 'teatro' },
+          { title: 'Dança', value: 'danca' },
+          { title: 'Audiovisual', value: 'audiovisual' },
+          { title: 'Evento Cultural', value: 'evento' },
+          { title: 'Educação / Oficina', value: 'educacao' },
+        ],
+      },
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (!value) return true
+          const categorias = (context.document as { categorias?: string[] } | undefined)?.categorias
+          if (!Array.isArray(categorias) || categorias.length === 0) return true
+          return categorias.includes(value) || 'A Categoria Principal deve estar incluída em “Categorias”.'
+        }),
     }),
   ],
   preview: {

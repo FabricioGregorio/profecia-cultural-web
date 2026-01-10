@@ -1,4 +1,3 @@
-import { ThemeProvider } from "../components/ThemeProvider";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { NextIntlClientProvider } from 'next-intl';
@@ -16,16 +15,9 @@ export default async function WebsiteLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <Header />
-        {children}
-        <Footer locale={locale} />
-      </ThemeProvider>
+      <Header />
+      {children}
+      <Footer locale={locale} />
     </NextIntlClientProvider>
   );
 }

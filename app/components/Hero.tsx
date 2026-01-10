@@ -67,7 +67,7 @@ export default function Hero() {
               priority={photo.id <= 2}
             />
             
-            <div className="absolute inset-0 bg-white/10 dark:bg-black/60 transition-opacity duration-500 group-hover:opacity-0" />
+            <div className="absolute inset-0 bg-black/60 transition-opacity duration-500 group-hover:opacity-0" />
           </motion.div>
         ))}
       </div>

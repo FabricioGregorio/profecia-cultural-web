@@ -4,21 +4,7 @@
 
 @layer base {
   :root {
-    /* --- TEMA CLARO --- */
-    --background: 248 248 255; 
-    --foreground: 10 10 10; 
-
-    --primary: 255 186 3; 
-    --primary-foreground: 10 10 10;
-
-    --card: 248 248 255;
-    --card-foreground: 10 10 10;
-    
-    --border: 229 231 235;
-  }
-
-  .dark {
-    /* --- TEMA ESCURO (padrão) --- */
+    /* --- TEMA ÚNICO (ESCURO) --- */
     --background: 10 10 10; 
     --foreground: 248 248 255;
 
@@ -37,6 +23,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground;
   }
 }

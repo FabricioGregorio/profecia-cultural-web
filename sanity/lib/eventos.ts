@@ -20,6 +20,7 @@ export type EventoShowcase = {
   titulo: string
   slug?: string
   categorias?: string[]
+  categoriaPrincipal?: string
   descricaoCurta?: string
   capa?: SanityImage
   dataRealizacao?: string
@@ -43,6 +44,7 @@ export async function getShowcaseEventos(limit = 3): Promise<EventoShowcase[]> {
     titulo,
     "slug": slug.current,
     categorias,
+    categoriaPrincipal,
     descricaoCurta,
     capa,
     dataRealizacao,
@@ -60,6 +62,7 @@ export async function getEventoPorSlug(slug: string): Promise<EventoDetalhado | 
     titulo,
     "slug": slug.current,
     categorias,
+    categoriaPrincipal,
     descricaoCurta,
     conceito,
     capa,

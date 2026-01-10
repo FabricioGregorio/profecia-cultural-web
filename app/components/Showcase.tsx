@@ -41,9 +41,13 @@ export default async function Showcase({ eventos }: ShowcaseProps) {
 
     const href = evento.slug ? `/eventos/${evento.slug}` : '/eventos'
 
+    const categoria = (evento.categoriaPrincipal || '').trim()
+      || (Array.isArray(evento.categorias) && evento.categorias[0])
+      || 'outros'
+
     return {
       key: evento._id,
-      categoria: (Array.isArray(evento.categorias) && evento.categorias[0]) || 'outros',
+      categoria,
       titulo: title,
       teaser,
       imageSrc,
